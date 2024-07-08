@@ -1,8 +1,8 @@
 /***********************************************************************
  * Source File:
- *    ACCELERATION 
+ *    ACCELERATION
  * Author:
- *    <your name here>
+ *    Daniel Malasky
  * Summary:
  *    Everything we need to know about changing speed
  ************************************************************************/
@@ -14,15 +14,12 @@
 
 
 
-/*********************************************
- * ACCELERATION : SET
- *  set from angle and direction
- *********************************************/
-void Acceleration::set(const Angle & a, double magnitude)
+ /*********************************************
+  * ACCELERATION : SET
+  *  set from angle and direction
+  *********************************************/
+void Acceleration::set(const Angle& a, double magnitude)
 {
-   
-}
-void AccelerationDummy::set(const Angle& a, double magnitude)
-{
-   assert(false);
+   ddx = magnitude * sin(a.getRadians());
+   ddy = magnitude * cos(a.getRadians());
 }

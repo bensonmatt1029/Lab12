@@ -1,6 +1,6 @@
 /***********************************************************************
  * Heaader File:
- *    Test : Test runner
+ *    TEST
  * Author:
  *    Br. Helfrich
  * Summary:

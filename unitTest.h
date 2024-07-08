@@ -30,7 +30,7 @@ class UnitTest
 {
 public:
    UnitTest() { reset(); }
-   
+
 private:
    // a test failure is a failure string and a line number
    struct Failure
@@ -46,7 +46,7 @@ protected:
 
    // for closeEnough() and assertEquals(), what is the tolerance?
    double tolerance = 0.0001;
-   
+
    // utility function because floating point numbers are approximations
    bool closeEnough(double value, double test) const
    {
@@ -62,21 +62,21 @@ protected:
    {
       tests.clear();
    }
-   
+
    /*************************************************************
     * REPORT
     * Report the statistics
     *************************************************************/
-   void report(const char * name)
-   {    
+   void report(const char* name)
+   {
       // enumerate the failures, if there are any
-      for (auto & test : tests)
+      for (auto& test : tests)
          if (!test.second.empty())
          {
             std::cout << "\t" << test.first << "()\n";
-            for (auto & failure : test.second)
-               std::cout << "\t\tline:"   << failure.lineNumber
-                         << " condition:" << failure.failure << "\n";
+            for (auto& failure : test.second)
+               std::cout << "\t\tline:" << failure.lineNumber
+               << " condition:" << failure.failure << "\n";
          }
 
       // name the test case
@@ -106,20 +106,20 @@ protected:
       // after we have reported, the reset for the next report
       reset();
    }
-   
+
    /*************************************************************
     * ASSERT UNIT PARAMETERS
     * Custom assert code so we can see all the errors at once
     *************************************************************/
    void assertUnitParameters(bool condition, const char* conditionString,
-                             int line, const char* func)
+      int line, const char* func)
    {
       std::string sFunc(func);
 
       if (!condition)
       {
          // add a failure to the list of failures
-         Failure failure{std::string(conditionString), line};
+         Failure failure{ std::string(conditionString), line };
          tests[sFunc].push_back(failure);
       }
       else
@@ -128,6 +128,6 @@ protected:
          tests[sFunc];
       }
    }
-   
+
 
 };

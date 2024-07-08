@@ -2,10 +2,10 @@
  * Source File:
  *    VELOCITY
  * Author:
- *    <your name here>
+ *    Matt Benson
  * Summary:
  *    Everything we need to know about speed
- ************************************************************************/ 
+ ************************************************************************/
 
 #include "velocity.h"
 #include "acceleration.h"
@@ -14,23 +14,33 @@
 #include <math.h>  // for sqrt()
 #include <cassert>
 
-/*********************************************
- * VELOCITY : ADD
- *  v = v_0 + a t
- *********************************************/
+ /*********************************************
+  * VELOCITY : ADD
+  *  v = v_0 + a t
+  *********************************************/
 void Velocity::add(const Acceleration& acceleration, double time)
 {
-
+   dx += (acceleration.getDDX() * time);
+   dy += (acceleration.getDDY() * time);
 }
-
 
 /*********************************************
  * VELOCITY : GET SPEED
  *  find the magnitude of velocity
+ *        dx
+ *     +-------/
+ *     |      /
+ *  dy |     /
+ *     |    /speed or magnitude
+ *     | a /
+ *     |  /
+ *     | /
+ *            _____________
+ *  speed = \/ dx^2 + dy^2
  *********************************************/
 double Velocity::getSpeed() const
 {
-   return 9.9;
+   return sqrt((dx * dx) + (dy * dy));
 }
 
 /*********************************************
@@ -39,16 +49,17 @@ double Velocity::getSpeed() const
  *     +-------/
  *     |      /
  *  dy |     /
- *     |    /speed
+ *     |    /speed or magnitude
  *     | a /
  *     |  /
  *     | /
- * dy = speed cos a
- * dx = speed sin a
+ * dy = speed cos(a)
+ * dx = speed sin(a)
  *********************************************/
-void Velocity::set(const Angle & angle, double magnitude)
+void Velocity::set(const Angle& angle, double magnitude)
 {
-
+   dx = magnitude * sin(angle.getRadians());
+   dy = magnitude * cos(angle.getRadians());
 }
 
 
@@ -60,18 +71,17 @@ void Velocity::set(const Angle & angle, double magnitude)
  *     +-------/
  *     |      /
  *  dy |     /
- *     |    /
+ *     |    / speed
  *     | a /
  *     |  /
  *     | /
+ *
+ *  a = atan2(dx, dy)
+ *  dx = cos(a) x speed
+ *  dy = sin(a) x speed
  ************************************************/
 Angle Velocity::getAngle() const
 {
-   return Angle();
-}
-Angle VelocityDummy::getAngle() const
-{
-   assert(false); 
    return Angle();
 }
 

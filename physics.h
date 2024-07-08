@@ -2,7 +2,7 @@
  * Header File:
  *    PHYSICS
  * Author:
- *    <your name here>
+ *    Daniel Malasky & Matt Benson
  * Summary:
  *    Laws of motion, effects of gravity, wind resistence, etc.
  ************************************************************************/
@@ -12,6 +12,7 @@
 #define _USE_MATH_DEFINES 
 #include <math.h>
 #include <cassert>  // for ASSERT 
+#include <cmath>    // for abs
 
  /*******************************************************
   * AREA FROM RADIUS
@@ -20,7 +21,7 @@
   ********************************************************/
 inline double areaFromRadius(double radius)
 {
-   return -99.9;
+   return M_PI * radius * radius;
 }
 
 /**********************************************************
@@ -33,10 +34,14 @@ inline double areaFromRadius(double radius)
  * This force is determined by
  *    force = 1/2 density drag area velocity ^ 2
  ************************************************************/
-inline double forceFromDrag(double density, double drag, 
-                            double radius, double velocity)
+inline double forceFromDrag(double density, double drag,
+   double radius, double velocity)
 {
-   return -99.9;
+   // compute the area
+   double area = areaFromRadius(radius);
+
+   // compute the drag
+   return 0.5 * density * drag * area * velocity * velocity;
 }
 
 /**********************************************************
@@ -50,7 +55,8 @@ inline double forceFromDrag(double density, double drag,
  ************************************************************/
 inline double accelerationFromForce(double force, double mass)
 {
-   return -99.9;
+   // a = m / f
+   return force / mass;
 }
 
 /***********************************************************
@@ -64,8 +70,19 @@ inline double accelerationFromForce(double force, double mass)
  ************************************************************/
 inline double velocityFromAcceleration(double acceleration, double time)
 {
-   return -99.9;
+   return acceleration * time;
 }
+
+/*********************************************************
+ * MAPPING
+ * A simple structure to represent the domain and the range.
+ * We use this for linear interpolation
+ *********************************************************/
+struct Mapping
+{
+   double domain;
+   double range;
+};
 
 /*********************************************************
  * LINEAR INTERPOLATION
@@ -85,28 +102,22 @@ inline double velocityFromAcceleration(double acceleration, double time)
  *   r  = r0 + (r1 - r0) (d - d0) / (d1 - d0)
  *********************************************************/
 inline double linearInterpolation(double d0, double r0,
-                                  double d1, double r1,
-                                  double d)
+   double d1, double r1,
+   double d)
 {
-   return -99.9;
+   assert(abs(d1 - d0) >= abs(d - d0));
+   double range = r0 + (r1 - r0) * (d - d0) / (d1 - d0);
+   assert(abs(r1 - r0) >= abs(range - r0));
+   return range;
 }
-
-/*********************************************************
- * MAPPING
- * A simple structure to represent the domain and the range.
- * We use this for linear interpolation
- *********************************************************/
-struct Mapping
-{
-   double domain;
-   double range;
-};
 
 /*********************************************************
  * LINEAR INTERPOLATION
  * From a list of domains and ranges, linear interpolate
  *********************************************************/
-double linearInterpolation(const Mapping mapping[], int numMapping, double domain);
+double linearInterpolation(const Mapping mapping[],
+   int numMapping,
+   double domain);
 
 /*********************************************************
  * GRAVITY FROM ALTITUDE
