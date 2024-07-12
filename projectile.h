@@ -2,7 +2,7 @@
  * Header File:
  *    PROJECTILE
  * Author:
- *    <your name here>
+ *    Matt Benson
  * Summary:
  *    Everything we need to know about a projectile
  ************************************************************************/
@@ -17,30 +17,49 @@
 
 #define DEFAULT_PROJECTILE_WEIGHT 46.7       // kg
 #define DEFAULT_PROJECTILE_RADIUS 0.077545   // m
+#define GRAVITY                   -9.8064    // m/s^2
 
-// forward declaration for the unit test class
-class TestProjectile; 
+ // forward declaration for the unit test class
+class TestProjectile;
 
- /**********************************************************************
-  * Projectile
-  *    Everything we need to know about a projectile
-  ************************************************************************/
+/**********************************************************************
+ * Projectile
+ * Everything we need to know about a projectile
+ ************************************************************************/
 class Projectile
 {
 public:
    // Friend the unit test class
-   friend ::TestProjectile;
+   friend::TestProjectile;
 
    // create a new projectile with the default settings
-   Projectile() : mass(-99.9), radius(-99.9) {}
+   Projectile() : mass(DEFAULT_PROJECTILE_WEIGHT), radius(DEFAULT_PROJECTILE_RADIUS), flightPath() {}
 
-
+   // reset the game
+   void reset(double& mass, double& radius);
 
    // advance the round forward until the next unit of time
-   void advance(double simulationTime) {}
+   void advance(double simulationTime);
 
+   // getters
+   double getAltitude() const;
+   Position getPosition() const;
+   double getFlightDistance() const;
+   double getSpeed() const;
+   double getCurrentTime() const;
 
+   // setters
+   void setMass(double mass) { this->mass = mass; }
+   void setRadius(double radius) {this->radius = radius; }
 
+   // are we flying?
+   bool isFlying() { return !flightPath.empty(); }
+
+   // draw the projectile
+   void draw(ogstream& gout) const;
+
+   // fire the projectile
+   void fire(Position pos, double time, double angle, Velocity vel);
 
 private:
 

@@ -30,7 +30,6 @@ class Velocity
    friend TestVelocity;
    friend TestProjectile;
 
-
 public:
    // constructors
    Velocity() : dx(0.0), dy(0.0) { }
