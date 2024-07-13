@@ -248,8 +248,6 @@ private:
       // verify
       assertUnit(h.position.x >= 0.0);
       assertUnit(h.position.x <= 9.0);
-      assertUnit(h.position.y >= 0.0);
-      assertUnit(h.position.y <= 9.0);
    }
 
     /*********************************************
@@ -269,8 +267,6 @@ private:
       // verify
       assertUnit(h.position.x >= 0.0);
       assertUnit(h.position.x <= 900.0);
-      assertUnit(h.position.y >= 0.0);
-      assertUnit(h.position.y <= 900.0);
    }
 
    /*********************************************

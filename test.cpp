@@ -48,7 +48,7 @@ void testRunner()
    TestPosition().run();
    TestPhysics().run();
    TestVelocity().run();
-//   TestGround().run();  
+   TestGround().run();  
    TestHowitzer().run();
    TestProjectile().run();
 }

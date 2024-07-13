@@ -9,6 +9,8 @@
 
 #pragma once
 #include "position.h"
+#include "ground.h"      // for GROUND
+#include "howitzer.h"    // for HOWITZER
 
 
  /*********************************************
@@ -18,6 +20,13 @@
 class Simulator
 {
 public:
-   Simulator(const Position & posUpperRight) {}
+   Simulator(const Position & posUpperRight) :
+      ground(posUpperRight) {}
+   void display();
+
+private:
+   Ground ground;
+   Howitzer howitzer;
+
 
 };

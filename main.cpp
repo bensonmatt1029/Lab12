@@ -29,10 +29,8 @@ void callBack(const Interface* pUI, void* p)
    // is the first step of every single callback function in OpenGL. 
    Simulator* pSim = (Simulator*)p;
 
-   ogstream gout;
-   Position pos(10,10);
-   gout = pos;
-   gout << "Hello world";
+
+   pSim->display();
 }
 
 double Position::metersFromPixels = 40.0;
