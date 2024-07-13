@@ -63,7 +63,15 @@ private:
      *********************************************/
    void defaultConstructor()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+
+
+      // exercise
+      Howitzer h;
+
+      // verify
+      assertEquals(h.muzzleVelocity, 827.0);
+      assertEquals(h.elevation.radians, 0.0);
    }
 
    /*****************************************************************
@@ -79,7 +87,19 @@ private:
      *********************************************/
    void getPosition_zero()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      Position pos;
+
+      // exercise
+      pos = h.getPosition();
+
+      // verify
+      assertEquals(pos.x, 0.0);
+      assertEquals(pos.y, 0.0);
+      assertEquals(h.position.x, 0.0);
+      assertEquals(h.position.y, 0.0);
+
    }
 
    /*********************************************
@@ -89,7 +109,20 @@ private:
     *********************************************/
    void getPosition_middle()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      h.position.x = 123.4;
+      h.position.y = 567.8;
+      Position pos;
+
+      // exercise
+      pos = h.getPosition();
+
+      // verify
+      assertEquals(pos.x, 123.4);
+      assertEquals(pos.y, 567.8);
+      assertEquals(h.position.x, 123.4);
+      assertEquals(h.position.y, 567.8);
    }
 
    /*********************************************
@@ -99,7 +132,17 @@ private:
     *********************************************/
    void getMuzzleVelocity_slow()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      h.muzzleVelocity = 24.68;
+      double m;
+
+      // exercise
+      m = h.getMuzzleVelocity();
+
+      // verify
+      assertEquals(m, 24.68);
+      assertEquals(h.muzzleVelocity, 24.68);
    }
 
    /*********************************************
@@ -109,7 +152,17 @@ private:
     *********************************************/
    void getMuzzleVelocity_standard()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      double m;
+
+      // exercise
+       m = h.getMuzzleVelocity();
+
+      // verify
+      assertEquals(m, 827.0);
+      assertEquals(h.muzzleVelocity, 827.0);
+   
    }
 
    /*********************************************
@@ -119,7 +172,17 @@ private:
     *********************************************/
    void getElevation_up()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      h.elevation.radians = 0.0;
+      Angle e;
+
+      // exercise
+      e = h.getElevation();
+
+      // verify
+      assertEquals(e.radians, 0.0);
+      assertEquals(h.elevation.radians, 0.0);
    }
 
    /*********************************************
@@ -129,7 +192,17 @@ private:
     *********************************************/
    void getElevation_right()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      h.elevation.radians = 0.4;
+      Angle e;
+
+      // exercise
+      e = h.getElevation();
+
+      // verify
+      assertEquals(e.radians, 0.4);
+      assertEquals(h.elevation.radians, 0.4);
    }
 
    /*********************************************
@@ -139,7 +212,17 @@ private:
     *********************************************/
    void getElevation_left()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      h.elevation.radians = 5.8;
+      Angle e;
+
+      // exercise
+      e = h.getElevation();
+
+      // verify
+      assertEquals(e.radians, 5.8);
+      assertEquals(h.elevation.radians, 5.8);
    }
 
    /*****************************************************************
@@ -155,7 +238,18 @@ private:
      *********************************************/
    void generatePosition_small()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      Position pos(10.0, 10.0);
+
+      // exercise
+      h.generatePosition(pos);
+
+      // verify
+      assertUnit(h.position.x >= 0.0);
+      assertUnit(h.position.x <= 9.0);
+      assertUnit(h.position.y >= 0.0);
+      assertUnit(h.position.y <= 9.0);
    }
 
     /*********************************************
@@ -165,7 +259,18 @@ private:
     *********************************************/
    void generatePosition_large()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      Position pos(1000.0, 1000.0);
+
+      // exercise
+      h.generatePosition(pos);
+
+      // verify
+      assertUnit(h.position.x >= 0.0);
+      assertUnit(h.position.x <= 900.0);
+      assertUnit(h.position.y >= 0.0);
+      assertUnit(h.position.y <= 900.0);
    }
 
    /*********************************************
@@ -175,7 +280,15 @@ private:
     *********************************************/
    void raise_rightDown()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      h.elevation.radians = 0.5;
+
+      // exercise
+      h.raise(-0.1);
+
+      // verify
+      assertEquals(h.elevation.radians, 0.6);
    }
 
    /*********************************************
@@ -185,7 +298,15 @@ private:
     *********************************************/
    void raise_rightUp()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      h.elevation.radians = 0.5;
+
+      // exercise
+      h.raise(0.1);
+
+      // verify
+      assertEquals(h.elevation.radians, 0.4);
    }
 
    /*********************************************
@@ -195,7 +316,15 @@ private:
     *********************************************/
    void raise_leftDown()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      h.elevation.radians = (2*M_PI) - 0.5;
+
+      // exercise
+      h.raise(-0.1);
+
+      // verify
+      assertEquals(h.elevation.radians, (2 * M_PI) - 0.6);
    }
 
    /*********************************************
@@ -205,7 +334,15 @@ private:
     *********************************************/
    void raise_leftUp()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      h.elevation.radians = (2 * M_PI) - 0.5;
+
+      // exercise
+      h.raise(0.1);
+
+      // verify
+      assertEquals(h.elevation.radians, (2 * M_PI) - 0.4);
    }
 
    /*********************************************
@@ -215,7 +352,15 @@ private:
     *********************************************/
    void rotate_clock()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      h.elevation.radians = 1.23;
+
+      // exercise
+      h.rotate(0.3);
+
+      // verify
+      assertEquals(h.elevation.radians, 1.53);
    }
 
    /*********************************************
@@ -225,7 +370,15 @@ private:
     *********************************************/
    void rotate_counterClock()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      h.elevation.radians = 1.23;
+
+      // exercise
+      h.rotate(-0.3);
+
+      // verify
+      assertEquals(h.elevation.radians, 0.93);
    }
 
    /*********************************************
@@ -235,7 +388,19 @@ private:
     *********************************************/
    void rotate_wrapClock()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      h.elevation.radians = 6.1;
+      tolerance = 0.1;
+
+      // exercise
+      h.rotate(0.2);
+
+      // verify
+      assertEquals(h.elevation.radians, 0.1);
+
+      //teardown
+      tolerance = 0.0001;
    }
 
    /*********************************************
@@ -245,7 +410,19 @@ private:
     *********************************************/
    void rotate_wrapCounterClock()
    {
-      assertUnit(NOT_YET_IMPLEMENTED);
+      // setup
+      Howitzer h;
+      h.elevation.radians = 0.1;
+      tolerance = 0.1;
+
+      // exercise
+      h.rotate ( -0.2 - (4* M_PI));
+
+      // verify
+      assertEquals(h.elevation.radians, 6.1);
+
+      //teardown
+      tolerance = 0.0001;
    }
 
    /*****************************************************************

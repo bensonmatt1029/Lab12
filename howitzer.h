@@ -2,7 +2,7 @@
  * Header File:
  *    HOWITZER
  * Author:
- *    <your name here>
+ *    Daniel Malasky
  * Summary:
  *    Everything we need to know about a howitzer (aka the gun)
  ************************************************************************/
@@ -35,7 +35,7 @@ class Howitzer
       friend ::TestHowitzer;
 
       // default constructor
-      Howitzer() : muzzleVelocity(DEFAULT_MUZZLE_VELOCITY), elevation(45.0) {}
+      Howitzer() : muzzleVelocity(DEFAULT_MUZZLE_VELOCITY), elevation(0.0) {}
 
       // draw
       void draw(ogstream& gout, double flightTime) const
