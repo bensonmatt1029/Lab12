@@ -72,7 +72,9 @@ private:
       // verify
       assertEquals(h.muzzleVelocity, 827.0);
       assertEquals(h.elevation.radians, 0.0);
-   }
+
+   }// teardown
+
 
    /*****************************************************************
     *****************************************************************
@@ -100,7 +102,7 @@ private:
       assertEquals(h.position.x, 0.0);
       assertEquals(h.position.y, 0.0);
 
-   }
+   }// teardown
 
    /*********************************************
     * name:    GET POSITION MIDDLE
@@ -123,7 +125,8 @@ private:
       assertEquals(pos.y, 567.8);
       assertEquals(h.position.x, 123.4);
       assertEquals(h.position.y, 567.8);
-   }
+
+   }// teardown
 
    /*********************************************
     * name:    GET MUZZLE VELOCITY - SLOW SPEED
@@ -143,7 +146,8 @@ private:
       // verify
       assertEquals(m, 24.68);
       assertEquals(h.muzzleVelocity, 24.68);
-   }
+
+   }// teardown
 
    /*********************************************
     * name:    GET MUZZLE VELOCITY - STANDARD SPEED
@@ -163,7 +167,7 @@ private:
       assertEquals(m, 827.0);
       assertEquals(h.muzzleVelocity, 827.0);
    
-   }
+   }// teardown
 
    /*********************************************
     * name:    GET ELEVATION - up
@@ -183,7 +187,8 @@ private:
       // verify
       assertEquals(e.radians, 0.0);
       assertEquals(h.elevation.radians, 0.0);
-   }
+
+   }// teardown
 
    /*********************************************
     * name:    GET ELEVATION - right
@@ -203,7 +208,9 @@ private:
       // verify
       assertEquals(e.radians, 0.4);
       assertEquals(h.elevation.radians, 0.4);
-   }
+
+   }// teardown
+
 
    /*********************************************
     * name:    GET ELEVATION - left
@@ -223,7 +230,8 @@ private:
       // verify
       assertEquals(e.radians, 5.8);
       assertEquals(h.elevation.radians, 5.8);
-   }
+
+   }// teardown
 
    /*****************************************************************
     *****************************************************************
@@ -248,7 +256,8 @@ private:
       // verify
       assertUnit(h.position.x >= 0.0);
       assertUnit(h.position.x <= 9.0);
-   }
+
+   }// teardown
 
     /*********************************************
     * name:    GENERATE POSITION large board
@@ -267,7 +276,8 @@ private:
       // verify
       assertUnit(h.position.x >= 0.0);
       assertUnit(h.position.x <= 900.0);
-   }
+
+   }// teardown
 
    /*********************************************
     * name:    RAISE to the right/down
@@ -285,7 +295,8 @@ private:
 
       // verify
       assertEquals(h.elevation.radians, 0.6);
-   }
+
+   }// teardown
 
    /*********************************************
     * name:    RAISE to the right/up
@@ -303,7 +314,8 @@ private:
 
       // verify
       assertEquals(h.elevation.radians, 0.4);
-   }
+
+   }// teardown
 
    /*********************************************
     * name:    RAISE to the left down
@@ -321,7 +333,8 @@ private:
 
       // verify
       assertEquals(h.elevation.radians, (2 * M_PI) - 0.6);
-   }
+
+   }// teardown
 
    /*********************************************
     * name:    RAISE to the left up
@@ -339,7 +352,8 @@ private:
 
       // verify
       assertEquals(h.elevation.radians, (2 * M_PI) - 0.4);
-   }
+
+   }// teardown
 
    /*********************************************
     * name:    ROTATE CLOCKWISE no wrapping
@@ -357,7 +371,8 @@ private:
 
       // verify
       assertEquals(h.elevation.radians, 1.53);
-   }
+
+   }// teardown
 
    /*********************************************
     * name:    ROTATE COUNTER CLOCKWISE no wrapping
@@ -375,7 +390,8 @@ private:
 
       // verify
       assertEquals(h.elevation.radians, 0.93);
-   }
+
+   }// teardown
 
    /*********************************************
     * name:    ROTATE CLOCKWISE CLOCKWISE WRAP BY 2PI

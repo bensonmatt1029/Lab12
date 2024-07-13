@@ -21,12 +21,15 @@ class Simulator
 {
 public:
    Simulator(const Position & posUpperRight) :
-      ground(posUpperRight) {}
+      ground(posUpperRight) 
+   {
+      howitzer.generatePosition(posUpperRight);
+   }
+
    void display();
 
 private:
    Ground ground;
    Howitzer howitzer;
-
 
 };
