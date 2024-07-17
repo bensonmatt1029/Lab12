@@ -29,6 +29,12 @@ void callBack(const Interface* pUI, void* p)
    // is the first step of every single callback function in OpenGL. 
    Simulator* pSim = (Simulator*)p;
 
+   // Update the simulator state
+   pSim->update(pUI);
+
+   // Check gameplay rules
+   pSim->gameplay(pUI);
+   
    // Draw updated game state.
    pSim->display();
 }

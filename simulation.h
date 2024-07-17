@@ -11,6 +11,8 @@
 #include "position.h"
 #include "ground.h"      // for GROUND
 #include "howitzer.h"    // for HOWITZER
+#include "projectile.h"  // for PROJECTILE
+#include "uiInteract.h"  // for INTERFACE
 
 
  /*********************************************
@@ -26,10 +28,20 @@ public:
       howitzer.generatePosition(posUpperRight);
    }
 
+   // display stuff on the screen
    void display();
+
+   // update the simulator for each frame
+   // input
+   void update(const Interface* pUI);
+
+   // handle gameplay rules
+   // advance
+   void gameplay(const Interface* pUI);
 
 private:
    Ground ground;
    Howitzer howitzer;
+   Projectile projectile;
 
 };
