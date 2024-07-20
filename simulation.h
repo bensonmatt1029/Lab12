@@ -14,6 +14,8 @@
 #include "projectile.h"  // for PROJECTILE
 #include "uiInteract.h"  // for INTERFACE
 
+using namespace std;
+
 
  /*********************************************
   * Simulation
@@ -23,9 +25,10 @@ class Simulator
 {
 public:
    Simulator(const Position & posUpperRight) :
-      ground(posUpperRight) 
+      ground(posUpperRight)
    {
       howitzer.generatePosition(posUpperRight);
+      ground.reset(howitzer.getPosition());
    }
 
    // display stuff on the screen
@@ -37,7 +40,7 @@ public:
 
    // handle gameplay rules
    // advance
-   void gameplay(const Interface* pUI);
+   void advance(const Interface* pUI);
 
 private:
    Ground ground;

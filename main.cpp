@@ -33,7 +33,7 @@ void callBack(const Interface* pUI, void* p)
    pSim->update(pUI);
 
    // Check gameplay rules
-   pSim->gameplay(pUI);
+   pSim->advance(pUI);
    
    // Draw updated game state.
    pSim->display();
