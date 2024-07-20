@@ -43,5 +43,4 @@ private:
    Ground ground;
    Howitzer howitzer;
    Projectile projectile;
-
 };

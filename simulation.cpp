@@ -23,9 +23,11 @@ void Simulator::display()
 
    // Draw the howitzer
    howitzer.draw(gout, 10.0);
+
+   // Draw the projectile flight path
+   projectile.draw(gout);
    
    // TODO
-   // display projectile trail.
    // status messages
 
 }
@@ -38,7 +40,7 @@ void Simulator::update(const Interface* pUI)
    // projectile trail
 
 
-   projectile.fire(pUI);
+   //projectile.fire(howitzer.getPosition(), projectile.getCurrentTime(), howitzer.set(pUI);
 
 }
 

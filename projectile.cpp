@@ -9,112 +9,23 @@
 
 #include "projectile.h"
 #include "angle.h"
+#include "acceleration.h"
 #include "uiDraw.h"
 using namespace std;
-
-/***********************************************************************
- * RESET
- * Resets the projectile
- ************************************************************************/
-void Projectile::reset(double& mass, double& radius)
-{
-   this->mass = mass = DEFAULT_PROJECTILE_WEIGHT;
-   this->radius = radius = DEFAULT_PROJECTILE_RADIUS;
-   flightPath.clear();
-}
-
-/***********************************************************************
- * GET ALTITUDE
- * Gets the current altitude of the projectile.
- ************************************************************************/
-double Projectile::getAltitude() const
-{
-   if (!flightPath.empty())
-      return flightPath.back().pos.getMetersY();
-   return 0.0;
-}
-
-/***********************************************************************
- * GET POSITION
- * Gets the current position of the projectile.
- ************************************************************************/
-Position Projectile::getPosition() const
-{
-   if (!flightPath.empty())
-      return flightPath.back().pos;
-   return Position();
-}
-
-/***********************************************************************
- * GET FLIGHT DISTANCE
- * Gets the horizontal distance the projectile has traveled.
- ************************************************************************/
-double Projectile::getFlightDistance() const
-{
-   if (!flightPath.empty())
-      return flightPath.back().pos.getMetersX();
-   return 0.0;
-}
-
-/***********************************************************************
- * GET SPEED
- * Gets the current speed of the projectile.
- ************************************************************************/
-double Projectile::getSpeed() const
-{
-   if (!flightPath.empty())
-      return flightPath.back().v.getSpeed();
-   return 0.0;
-}
-
-/***********************************************************************
- * GET CURRENT TIME
- * Gets the current simulation time.
- ************************************************************************/
-double Projectile::getCurrentTime() const
-{
-   if (!flightPath.empty())
-      return flightPath.back().t;
-   return 0.0;
-}
-
-/***********************************************************************
- * DRAW
- * Draws the projectile path
- ************************************************************************/
-void Projectile::draw(ogstream& gout) const
-{
-   // Iterate over the flight path and draw each position
-   for (const auto& pvt : flightPath)
-
-   {  // Drawing the projectile at each position in the flight path
-      gout.drawProjectile(pvt.pos); 
-   }
-
-   // Draw the current position of the projectile
-   if (!flightPath.empty())
-
-   {  // Drawing the projectile at the last position
-      gout.drawProjectile(flightPath.back().pos); 
-   }
-}
 
 /***********************************************************************
  * FIRE
  * Fires the projectile taking position, time, angle, and velocity.
  ************************************************************************/
-void Projectile::fire(Position pos, double time, double angle, Velocity vel) 
+void Projectile::fire(const Position& posHowitzer, double simulationTime,
+   const Angle& elevation, double muzzleVelocity)
 {
-   // Reverse the velocity if the angle is negative
-   if (angle < 0)
-   {
-      vel.reverse();
-   }
+   reset();
 
    PositionVelocityTime pvt;
-   pvt.pos = pos;
-   pvt.v = vel;
-   pvt.t = time;
+   pvt.pos = posHowitzer;
+   pvt.t = simulationTime;
+   pvt.v.set(elevation, muzzleVelocity);
    flightPath.push_back(pvt);
 }
 
