@@ -17,7 +17,7 @@
 
 #define DEFAULT_PROJECTILE_WEIGHT 46.7       // kg
 #define DEFAULT_PROJECTILE_RADIUS 0.077545   // m
-#define GRAVITY                   -9.8064    // m/s^2
+
 
  // forward declaration for the unit test class
 class TestProjectile;
@@ -36,7 +36,12 @@ public:
    Projectile() : mass(DEFAULT_PROJECTILE_WEIGHT), radius(DEFAULT_PROJECTILE_RADIUS), flightPath() {}
 
    // reset the game
-   void reset(double& mass, double& radius);
+   void reset()
+   {
+      flightPath.clear();
+      mass = DEFAULT_PROJECTILE_WEIGHT;
+      radius = DEFAULT_PROJECTILE_RADIUS;
+   }
 
    // advance the round forward until the next unit of time
    void advance(double simulationTime);
@@ -44,6 +49,10 @@ public:
    // getters
    double getAltitude() const;
    Position getPosition() const;
+   double getFlightTime() const
+   {
+      return (flightPath.size() >= 2) ? flightPath.back().t - flightPath.front().t : 0.0;
+   }
    double getFlightDistance() const;
    double getSpeed() const;
    double getCurrentTime() const;

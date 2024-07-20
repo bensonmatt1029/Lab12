@@ -12,16 +12,6 @@
 #include "uiDraw.h"
 using namespace std;
 
-/***********************************************************************
- * RESET
- * Resets the projectile
- ************************************************************************/
-void Projectile::reset(double& mass, double& radius)
-{
-   this->mass = mass = DEFAULT_PROJECTILE_WEIGHT;
-   this->radius = radius = DEFAULT_PROJECTILE_RADIUS;
-   flightPath.clear();
-}
 
 /***********************************************************************
  * GET ALTITUDE
@@ -103,10 +93,10 @@ void Projectile::draw(ogstream& gout) const
  * FIRE
  * Fires the projectile taking position, time, angle, and velocity.
  ************************************************************************/
-void Projectile::fire(Position pos, double time, double angle, Velocity vel) 
+void Projectile::fire(Position pos, double time, double howitzerAngle, Velocity vel) 
 {
    // Reverse the velocity if the angle is negative
-   if (angle < 0)
+   if (howitzerAngle < 0)
    {
       vel.reverse();
    }
@@ -128,7 +118,7 @@ void Projectile::advance(double simulationTime)
    if (flightPath.empty())
    {
       return;
-   }
+   } 
 
    // Get the last state of the projectile
    PositionVelocityTime lastState = flightPath.back();
@@ -138,6 +128,7 @@ void Projectile::advance(double simulationTime)
    const double dragCoefficient = dragFromMach(speed / 
       speedSoundFromAltitude(lastState.pos.getMetersY()));
    const double airDensity = densityFromAltitude(lastState.pos.getMetersY());
+   const double gravity = gravityFromAltitude(lastState.pos.getMetersY());
 
    // Calculate the drag force
    double dragForce = forceFromDrag(airDensity, dragCoefficient, 
@@ -159,21 +150,27 @@ void Projectile::advance(double simulationTime)
    // Calculate the new velocity
    PositionVelocityTime newState;
    newState.t = newTime;
-   double newVelocityX = lastState.v.getDX() + 
-      dragAccelerationX * simulationTime;
    double newPositionX = lastState.pos.getMetersX() + lastState.v.getDX() * 
       simulationTime + 0.5 * dragAccelerationX * simulationTime * simulationTime;
-   newState.v.addDX(newVelocityX);
+   double newPositionY = lastState.pos.getMetersY() + lastState.v.getDY() *
+      simulationTime + 0.5 * (gravity - dragAccelerationY) * simulationTime * simulationTime;
    newState.pos.addMetersX(newPositionX);
+   newState.pos.addMetersY(newPositionY);
 
    // Update vertical position and velocity
+   double newVelocityX = lastState.v.getDX() +
+      dragAccelerationX * simulationTime;
    double newVelocityY = lastState.v.getDY() + 
-      (GRAVITY - dragAccelerationY) * simulationTime;
-   double newPositionY = lastState.pos.getMetersY() + lastState.v.getDY() * 
-      simulationTime + 0.5 * (GRAVITY - dragAccelerationY) * simulationTime * simulationTime;
-   newState.pos.addMetersY(newPositionY);
+      (gravity - dragAccelerationY) * simulationTime;
+   newState.v.addDX(newVelocityX);
    newState.v.addDY(newVelocityY);
 
    // Add the new state to the flight path
+   cout << flightPath.size() << " " << newState.pos.getMetersY() << endl;
    flightPath.push_back(newState);
+   while (flightPath.size() > 10)
+   {
+      flightPath.pop_front();
+   }
+
 }

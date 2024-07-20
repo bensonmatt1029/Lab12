@@ -14,7 +14,7 @@
 using namespace std;
 
 /*******************************
- * TEST PROJECTILE
+ * TEST PROJECTILE n
  * A friend class for Projectile which contains the Projectile unit tests
  ********************************/
 class TestProjectile : public UnitTest
@@ -82,16 +82,15 @@ private:
    {
       // SETUP
       Projectile proj;
-      double mass = -99.0;
-      double radius = -99.0;
-
+      double mass = -99.99;
+      double radius = -99.9;
 
       // EXERCISE
-      proj.reset(mass, radius);
+      proj.reset();
 
       // VERIFY
-      assertEquals(mass, 46.7);
-      assertEquals(radius, 0.077545);
+      assertEquals(proj.mass, 46.7);
+      assertEquals(proj.radius, 0.077545);
       assertEquals(proj.flightPath.size(), 0);
 
       // TEARDOWN
@@ -116,7 +115,7 @@ private:
       proj.flightPath.push_back(pvt1);
 
       // EXERCISE
-      proj.reset(mass, radius);
+      proj.reset();
 
       // VERIFY
       assertEquals(proj.mass, 46.7);

@@ -25,6 +25,9 @@ void Simulator::display()
    // Draw the ground
    ground.draw(gout);
 
+   // Draw the projectile
+   projectile.draw(gout);
+
    
    gout = Position(23000, 18000);  // set position of messages
    gout.setf(ios::fixed);          // for double precision
@@ -124,9 +127,22 @@ void Simulator::advance(const Interface* pUI)
 
    if (pUI->isSpace())
    {
-      projectile.fire(projectile.getPosition(), 10.0, howitzer.getElevation().getRadians(), projectileSpeed);
+      projectile.fire(howitzer.getPosition(), 0.1, howitzer.getElevation().getRadians(), projectileSpeed);
+      projectile.advance(0.1);
       
-      projectile.advance(10);
+   }
+   if (projectile.isFlying())
+   {
+      if (ground.getElevationMeters(projectile.getPosition()) < projectile.getPosition().getMetersY())
+      {
+         projectile.advance(0.1);
+         
+      }
+      else
+      {
+         projectile.reset();
+      } 
+    
    }
 
 

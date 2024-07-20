@@ -29,6 +29,7 @@ public:
    {
       howitzer.generatePosition(posUpperRight);
       ground.reset(howitzer.getPosition());
+      
    }
 
    // display stuff on the screen

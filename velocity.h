@@ -51,6 +51,14 @@ public:
    void addV(const Velocity& rhs) { dx += rhs.dx; dy += rhs.dy; }
    void reverse() { dx = -dx, dy = -dy; }
 
+   // overload the += operator
+   Velocity& operator+=(const Velocity& rhs)
+   {
+      dx += rhs.dx;
+      dy += rhs.dy;
+      return *this;
+   }
+
 private:
    double dx;           // horizontal velocity
    double dy;           // vertical velocity
