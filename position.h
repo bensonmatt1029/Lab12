@@ -60,6 +60,10 @@ public:
    void add(const Acceleration& a, const Velocity& v, double t);
    void reverse() { }
 
+   bool operator==(const Position& rhs) const
+   {
+      return (x == rhs.x && y == rhs.y);
+   }
 
 private:
    double x;                 // horizontal position

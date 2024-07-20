@@ -29,7 +29,7 @@ public:
    {
       howitzer.generatePosition(posUpperRight);
       ground.reset(howitzer.getPosition());
-      
+      this->posUpperRight = posUpperRight;
    }
 
    // display stuff on the screen
@@ -47,5 +47,5 @@ private:
    Ground ground;
    Howitzer howitzer;
    Projectile projectile;
-
+   Position posUpperRight;
 };

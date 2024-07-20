@@ -11,10 +11,11 @@
 
 #include "projectile.h"
 #include "unitTest.h"
+#define MI_PI   3.14159265359
 using namespace std;
 
 /*******************************
- * TEST PROJECTILE n
+ * TEST PROJECTILE
  * A friend class for Projectile which contains the Projectile unit tests
  ********************************/
 class TestProjectile : public UnitTest
@@ -50,27 +51,27 @@ private:
     *****************************************************************
     *****************************************************************/
 
-   /*********************************************
-    * name:    DEFAULT CONSTRUCTOR
-    * input:   nothing
-    * output:  mass=46.7, radius=0.077545 flightPath={}
-    *********************************************/
+    /*********************************************
+     * name:    DEFAULT CONSTRUCTOR
+     * input:   nothing
+     * output:  mass=46.7, radius=0.077545 flightPath={}
+     *********************************************/
    void defaultConstructor()
    {
       // SETUP
       double mass;
       double radius;
-      
+
       // EXERCISE
       Projectile proj;
-      
+
       // VERIFY
       assertEquals(proj.mass, 46.7);
       assertEquals(proj.radius, 0.077545);
       assertEquals(proj.flightPath.size(), 0);
 
       // TEARDOWN
-      ;   
+      ;
    }
 
    /*********************************************
@@ -126,32 +127,31 @@ private:
       ;
    }
 
-
    /*****************************************************************
     *****************************************************************
     * FIRE
     *****************************************************************
-    *****************************************************************/  
+    *****************************************************************/
 
-   /*********************************************
-    * name:    FIRE horizontally right
-    * input:   angle=90  pos=(111,222) muzzleVelocity=100
-    * output:  flightPath={pos=111,222 v=100,0 t=1}
-    *********************************************/
+    /*********************************************
+     * name:    FIRE horizontally right
+     * input:   angle=90  pos=(111,222) muzzleVelocity=100
+     * output:  flightPath={pos=111,222 v=100,0 t=1}
+     *********************************************/
    void fire_right()
    {
       // SETUP
       Projectile proj;
       Position pos;
-      Velocity vel;
-      double angle = 90.0;
       pos.x = 111.0;
       pos.y = 222.0;
-      vel.dx = 100.0;
-      vel.dy = 0.0;
+      double simulationTime(1.0);
+      Angle angle;
+      angle.radians = MI_PI / 2.0;
+      double muzzleVelocity(100.0);
 
       // EXERCISE
-      proj.fire(Position(pos.x, pos.y), 1.0, angle, Velocity(vel.dx, vel.dy));
+      proj.fire(pos, simulationTime, angle, muzzleVelocity);
 
       // VERIFY
       assertEquals(proj.flightPath.back().pos.x, 111.0);
@@ -159,7 +159,6 @@ private:
       assertEquals(proj.flightPath.back().v.dx, 100.0);
       assertEquals(proj.flightPath.back().v.dy, 0.0);
       assertEquals(proj.flightPath.back().t, 1.0);
-      assertEquals(angle, 90.0);
 
       // TEARDOWN
       ;
@@ -172,18 +171,17 @@ private:
     *********************************************/
    void fire_left()
    {
-      // SETUP
       Projectile proj;
       Position pos;
-      Velocity vel;
-      double angle = -90.0;
       pos.x = 111.0;
       pos.y = 222.0;
-      vel.dx = 100.0;
-      vel.dy = 0.0;
+      double simulationTime(1.0);
+      Angle angle;
+      angle.radians = -MI_PI / 2.0;
+      double muzzleVelocity(100.0);
 
       // EXERCISE
-      proj.fire(Position(pos.x, pos.y), 1.0, angle, Velocity(vel.dx, vel.dy));
+      proj.fire(pos, simulationTime, angle, muzzleVelocity);
 
       // VERIFY
       assertEquals(proj.flightPath.back().pos.x, 111.0);
@@ -191,7 +189,6 @@ private:
       assertEquals(proj.flightPath.back().v.dx, -100.0);
       assertEquals(proj.flightPath.back().v.dy, 0.0);
       assertEquals(proj.flightPath.back().t, 1.0);
-      assertEquals(angle, -90.0);
 
       // TEARDOWN
       ;
@@ -204,18 +201,17 @@ private:
     *********************************************/
    void fire_up()
    {
-      // SETUP
       Projectile proj;
       Position pos;
-      Velocity vel;
-      double angle = 0.0;
       pos.x = 111.0;
       pos.y = 222.0;
-      vel.dx = 0.0;
-      vel.dy = 100.0;
+      double simulationTime(1.0);
+      Angle d;
+      d.radians = 0.0;
+      double muzzleVelocity(100.0);
 
       // EXERCISE
-      proj.fire(Position(pos.x, pos.y), 1.0, angle, Velocity(vel.dx, vel.dy));
+      proj.fire(pos, simulationTime, d, muzzleVelocity);
 
       // VERIFY
       assertEquals(proj.flightPath.back().pos.x, 111.0);
@@ -223,23 +219,22 @@ private:
       assertEquals(proj.flightPath.back().v.dx, 0.0);
       assertEquals(proj.flightPath.back().v.dy, 100.0);
       assertEquals(proj.flightPath.back().t, 1.0);
-      assertEquals(angle, 0.0);
 
       // TEARDOWN
-      
+      ;
    }
 
    /*****************************************************************
     *****************************************************************
     * ADVANCE
     *****************************************************************
-    *****************************************************************/ 
+    *****************************************************************/
 
-   /*********************************************
-    * name:    ADVANCE : the projectile is not fired. Nothing will happen
-    * input:   flightPath={}
-    * output:  flightPath={}
-    *********************************************/
+    /*********************************************
+     * name:    ADVANCE : the projectile is not fired. Nothing will happen
+     * input:   flightPath={}
+     * output:  flightPath={}
+     *********************************************/
    void advance_nothing()
    {
       // setup
@@ -493,7 +488,7 @@ private:
     *****************************************************************
     *****************************************************************/
 
-   // setup standard fixture - set the zoom to 1100m per pixel
+    // setup standard fixture - set the zoom to 1100m per pixel
    void setupStandardFixture()
    {
       Position p;
@@ -510,4 +505,3 @@ private:
    }
 
 };
-

@@ -51,6 +51,10 @@ void Simulator::display()
            << endl;
       gout << "Hang Time: " << projectile.getCurrentTime() // *NOTE* right getter?
            << endl;
+      gout << "Projectile pos: " << projectile.getPosition().getMetersX() << ' ' << projectile.getPosition().getMetersY()  // *NOTE* right getter?
+           << endl;
+      gout << "Target pos: " << ground.getTarget().getMetersX() << ' ' << ground.getTarget().getMetersY()  // *NOTE* right getter?
+           << endl;
    }
 
 
@@ -125,26 +129,37 @@ void Simulator::advance(const Interface* pUI)
    Velocity projectileSpeed;
    projectileSpeed.set(howitzer.getElevation().getRadians(), howitzer.getMuzzleVelocity());
 
-   if (pUI->isSpace())
+   if (pUI->isSpace() && !projectile.isFlying())
    {
-      projectile.fire(howitzer.getPosition(), 0.1, howitzer.getElevation().getRadians(), projectileSpeed);
-      projectile.advance(0.1);
+      projectile.fire(howitzer.getPosition(), 0.5, howitzer.getElevation(), howitzer.getMuzzleVelocity());
+      projectile.advance(1.0);
       
    }
    if (projectile.isFlying())
    {
+      // YOU SUNK MY BATTLESHIP
+      if (projectile.getPosition().getPixelsX() >= ground.getTarget().getPixelsX() - 10.0 &&
+         projectile.getPosition().getPixelsX() <= ground.getTarget().getPixelsX() + 10.0 &&
+         projectile.getPosition().getPixelsY() >= ground.getTarget().getPixelsY() - 10.0 &&
+         projectile.getPosition().getPixelsY() <= ground.getTarget().getPixelsY() + 10.0)
+      {
+         howitzer.generatePosition(posUpperRight);
+         ground.reset(howitzer.getPosition());
+         projectile.reset();
+      }
       if (ground.getElevationMeters(projectile.getPosition()) < projectile.getPosition().getMetersY())
       {
-         projectile.advance(0.1);
-         
+         projectile.advance(1.0);
       }
+
       else
       {
          projectile.reset();
       } 
     
    }
-
+   
+   
 
 }
 

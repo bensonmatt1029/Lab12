@@ -17,7 +17,7 @@
 
 #define DEFAULT_PROJECTILE_WEIGHT 46.7       // kg
 #define DEFAULT_PROJECTILE_RADIUS 0.077545   // m
-
+#define GRAVITY -9.8064
 
  // forward declaration for the unit test class
 class TestProjectile;
@@ -47,28 +47,37 @@ public:
    void advance(double simulationTime);
 
    // getters
-   double getAltitude() const;
-   Position getPosition() const;
+   double getAltitude() const { return isFlying() ? flightPath.back().pos.getMetersY() : 0; }
+   Position getPosition() const { return isFlying() ? flightPath.back().pos : Position(); }
    double getFlightTime() const
    {
       return (flightPath.size() >= 2) ? flightPath.back().t - flightPath.front().t : 0.0;
    }
-   double getFlightDistance() const;
-   double getSpeed() const;
-   double getCurrentTime() const;
+   double getFlightDistance() const
+   {
+      return (flightPath.size() >= 2) ?
+         abs(flightPath.front().pos.getMetersX() - flightPath.back().pos.getMetersX()) : 0.0;
+   }
+   double getSpeed() const { return isFlying() ? flightPath.back().v.getSpeed() : 0.0; }
+   double getCurrentTime() const { return isFlying() ? flightPath.back().t : 0.0; }
 
    // setters
    void setMass(double mass) { this->mass = mass; }
-   void setRadius(double radius) {this->radius = radius; }
+   void setRadius(double radius) { this->radius = radius; }
 
    // are we flying?
-   bool isFlying() { return !flightPath.empty(); }
+   bool isFlying() const { return !flightPath.empty(); }
 
    // draw the projectile
-   void draw(ogstream& gout) const;
+   void draw(ogstream& gout) const
+   {
+      for (auto it = flightPath.cbegin(); it != flightPath.cend(); ++it)
+         gout.drawProjectile(it->pos, getCurrentTime() - it->t);
+   }
 
    // fire the projectile
-   void fire(Position pos, double time, double angle, Velocity vel);
+   void fire(const Position& posHowitzer, double simulationTime,
+      const Angle& elevation, double muzzleVelocity);
 
 private:
 
