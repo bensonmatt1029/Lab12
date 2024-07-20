@@ -2,13 +2,12 @@
  * Suurce File:
  *    SIMULATION
  * Author:
- *    Daniel Malasky
+ *    Daniel Malasky and Matt Benson
  * Summary:
  *    Execute one simulation of a projectile being fired.
  ************************************************************************/
 
 #include "simulation.h"  // for SIMULATION
-
 
 /**********************************************************
  * DISPLAY
@@ -17,7 +16,6 @@
 void Simulator::display()
 {
    ogstream gout;
-
 
    // Draw the howitzer
    howitzer.draw(gout, 100.0);
@@ -28,7 +26,6 @@ void Simulator::display()
    // Draw the projectile
    projectile.draw(gout);
 
-   
    gout = Position(23000, 18000);  // set position of messages
    gout.setf(ios::fixed);          // for double precision
    gout.precision(1);
@@ -51,37 +48,21 @@ void Simulator::display()
            << endl;
       gout << "Hang Time: " << projectile.getCurrentTime() // *NOTE* right getter?
            << endl;
-      gout << "Projectile pos: " << projectile.getPosition().getMetersX() << ' ' << projectile.getPosition().getMetersY()  // *NOTE* right getter?
-           << endl;
-      gout << "Target pos: " << ground.getTarget().getMetersX() << ' ' << ground.getTarget().getMetersY()  // *NOTE* right getter?
-           << endl;
    }
-
-
-   // TODO
-   // display projectile trail.
-
 }
 
-
-
+/**********************************************************
+ * DISPLAY
+ * Draw on the screen
+**********************************************************/
 void Simulator::update(const Interface* pUI)
 {
-   // TODO
-   // moving the howitzer angle (left, right, up)
-   // firing the projectile (space)
-   // projectile trail
-
-
-   // *NOTE*
-   // check rotate speed
-   // make it so it can't rotate in a whole circle.
    // Move gun to the right
    if (pUI->isRight())
    {
       //if (howitzer.getElevation().getRadians() <= M_PI_2)
       //{ 
-      howitzer.rotate(.1);
+      howitzer.rotate(0.1);
       //} 
    }
    // Move gun to the left.
@@ -89,7 +70,7 @@ void Simulator::update(const Interface* pUI)
    {
       //if (howitzer.getElevation().getRadians() >= (M_PI + M_PI_2))
       //{
-      howitzer.rotate(-.1);
+      howitzer.rotate(-0.1);
       //}
    }
    // Raise the gun to straight up.
@@ -105,30 +86,14 @@ void Simulator::update(const Interface* pUI)
    {
       howitzer.raise(-0.01);
    }
-
-   
-
-
-
-   //projectile.fire(pUI);
-
 }
 
-// *NOTE*
-// maybe don't need pUI
-void Simulator::advance(const Interface* pUI)
+/**********************************************************
+ * DISPLAY
+ * Draw on the screen
+**********************************************************/
+void Simulator::gameplay(const Interface* pUI)
 {
-   // TODO
-   // check projectile collision with target and ground
-   // can't fire until projectiles lands
-   // reset game function?
-
-
-   //*NOTE*
-   // Not working at all.
-   Velocity projectileSpeed;
-   projectileSpeed.set(howitzer.getElevation().getRadians(), howitzer.getMuzzleVelocity());
-
    if (pUI->isSpace() && !projectile.isFlying())
    {
       projectile.fire(howitzer.getPosition(), 0.5, howitzer.getElevation(), howitzer.getMuzzleVelocity());
@@ -151,16 +116,11 @@ void Simulator::advance(const Interface* pUI)
       {
          projectile.advance(1.0);
       }
-
       else
       {
          projectile.reset();
       } 
-    
    }
-   
-   
-
 }
 
 

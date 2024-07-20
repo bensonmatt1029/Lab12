@@ -2,7 +2,7 @@
  * Header File:
  *    SIMULATION
  * Author:
- *    <your name here>
+ *    Daniel Malasky and Matt Benson
  * Summary:
  *    Execute one simulation of a projectile being fired.
  ************************************************************************/
@@ -15,7 +15,6 @@
 #include "uiInteract.h"  // for INTERFACE
 
 using namespace std;
-
 
  /*********************************************
   * Simulation
@@ -36,12 +35,10 @@ public:
    void display();
 
    // update the simulator for each frame
-   // input
    void update(const Interface* pUI);
 
    // handle gameplay rules
-   // advance
-   void advance(const Interface* pUI);
+   void gameplay(const Interface* pUI);
 
 private:
    Ground ground;
