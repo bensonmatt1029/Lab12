@@ -30,48 +30,44 @@ void Simulator::display()
    gout.setf(ios::fixed);          // for double precision
    gout.precision(1);
 
-   // Show howitzer gun angle
+   // Show a negative angle when angled to the left
+   Angle howitzerAngle(howitzer.getElevation());
+   if (howitzer.getElevation().getDegrees() > 180.0)
+   { 
+      howitzerAngle = howitzer.getElevation().getDegrees() - 360;
+   }
+
+   // Show howitzer angle
    if (!projectile.isFlying())
    {
-      gout << "Angle: " << howitzer.getElevation()
-          << endl;
+      gout << "Angle: " << howitzerAngle << endl;
    }
    // Show projectile information
    else
    {
-      // display the fuel, altitude, and speed
-      gout << "Altitude: " << projectile.getAltitude()
-           << endl;
-      gout << "Speed: " << projectile.getSpeed()
-           << endl;
-      gout << "Distance: " << projectile.getFlightDistance()
-           << endl;
-      gout << "Hang Time: " << projectile.getCurrentTime() // *NOTE* right getter?
-           << endl;
+      // Display the altitude, speed, distance, and hang time.
+      gout << "Altitude: "  << projectile.getAltitude()       << endl;
+      gout << "Speed: "     << projectile.getSpeed()          << endl;
+      gout << "Distance: "  << projectile.getFlightDistance() << endl;
+      gout << "Hang Time: " << projectile.getCurrentTime()    << endl;
    }
 }
 
 /**********************************************************
- * DISPLAY
- * Draw on the screen
-**********************************************************/
+ * UPDATE
+ * Update the simulator state for each frame
+ **********************************************************/
 void Simulator::update(const Interface* pUI)
 {
    // Move gun to the right
    if (pUI->isRight())
    {
-      //if (howitzer.getElevation().getRadians() <= M_PI_2)
-      //{ 
       howitzer.rotate(0.1);
-      //} 
    }
    // Move gun to the left.
    if (pUI->isLeft())
    {
-      //if (howitzer.getElevation().getRadians() >= (M_PI + M_PI_2))
-      //{
       howitzer.rotate(-0.1);
-      //}
    }
    // Raise the gun to straight up.
    if (pUI->isUp())
@@ -88,21 +84,25 @@ void Simulator::update(const Interface* pUI)
    }
 }
 
-/**********************************************************
- * DISPLAY
- * Draw on the screen
-**********************************************************/
+/************************************************
+ * GAMEPLAY
+ * Handle the gameplay rules based on user input,
+ * Projectile position and firing.
+ ************************************************/
 void Simulator::gameplay(const Interface* pUI)
 {
+   // Fire the gun
    if (pUI->isSpace() && !projectile.isFlying())
    {
       projectile.fire(howitzer.getPosition(), 0.5, howitzer.getElevation(), howitzer.getMuzzleVelocity());
       projectile.advance(1.0);
       
    }
+
+   // Rules of the game
    if (projectile.isFlying())
    {
-      // YOU SUNK MY BATTLESHIP
+      // Check if projectile hit target.
       if (projectile.getPosition().getPixelsX() >= ground.getTarget().getPixelsX() - 10.0 &&
          projectile.getPosition().getPixelsX() <= ground.getTarget().getPixelsX() + 10.0 &&
          projectile.getPosition().getPixelsY() >= ground.getTarget().getPixelsY() - 10.0 &&
@@ -112,6 +112,7 @@ void Simulator::gameplay(const Interface* pUI)
          ground.reset(howitzer.getPosition());
          projectile.reset();
       }
+      // Check if projectile has not hit the ground
       if (ground.getElevationMeters(projectile.getPosition()) < projectile.getPosition().getMetersY())
       {
          projectile.advance(1.0);

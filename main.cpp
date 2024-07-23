@@ -2,7 +2,7 @@
  * Source File:
  *    Lab 12: M777 Howitzer
  * Author:
- *    <your name here>
+ *    Daniel Malasky
  * Summary:
  *    Simulate firing the M777 howitzer 15mm artillery piece
  ************************************************************************/

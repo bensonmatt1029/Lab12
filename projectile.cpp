@@ -48,7 +48,6 @@ void Projectile::advance(double simulationTime)
    const double dragCoefficient = dragFromMach(speed /
       speedSoundFromAltitude(lastState.pos.getMetersY()));
    const double airDensity = densityFromAltitude(lastState.pos.getMetersY());
-   //const double gravity = gravityFromAltitude(lastState.pos.getMetersY());
 
    // Calculate the drag force
    double dragForce = forceFromDrag(airDensity, dragCoefficient,
@@ -86,27 +85,9 @@ void Projectile::advance(double simulationTime)
    newState.v.setDY(newVelocityY);
 
    // Add the new state to the flight path
-   cout << flightPath.size() << " " << newState.pos.getMetersY() << endl;
    flightPath.push_back(newState);
    while (flightPath.size() > 10)
    {
       flightPath.pop_front();
    }
-
-   //// Set
-   //PositionVelocityTime pvt = flightPath.back();
-   //double speed = pvt.v.getSpeed();
-   //double altitude = pvt.pos.getMetersY();
-
-   //// modify velocity to handle wind resistence
-   //double density = densityFromAltitude(altitude);
-   //double dragCoefficient = drag
-
-   //// inertia
-   //pvt.pos.addMetersX(velocityFromAcceleration(pvt.v.getDX(), getFlightTime()));
-   //pvt.pos.addMetersY(velocityFromAcceleration(pvt.v.getDY(), getFlightTime()));
-
-   //// add it to the back of the flight path
-   //flightPath.push_back(pvt);
-
 }

@@ -26,9 +26,9 @@ public:
    Simulator(const Position & posUpperRight) :
       ground(posUpperRight)
    {
+      this->posUpperRight = posUpperRight;      // for reset
       howitzer.generatePosition(posUpperRight);
-      ground.reset(howitzer.getPosition());
-      this->posUpperRight = posUpperRight;
+      ground.reset(howitzer.getPosition()); 
    }
 
    // display stuff on the screen
